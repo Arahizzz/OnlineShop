@@ -47,164 +47,21 @@
         </div>
     </div>
 
-    <div class="list">
-        <h1>Посуд</h1>
-        <div class="grid">
-            <div class="cell">
-                <img src="http://placekitten.com/300/300" alt="">
-                <p><a class=goodName href='useless.html'>Кастрюля</a></p>
-                <s class='old_price'>165</s>
-                <p><span class="price">150</span><button>Купити</button></p>
-            </div>
-            <div class="cell">
-                <img src="http://placekitten.com/300/300?12" alt="">
-                <p><a class=goodName href='useless.html'>Тарілка</a></p>
-                <p><span class="price">120</span><button>Купити</button></p>
-            </div>
-            <div class="cell">
-                <img src="http://placekitten.com/300/300?23" alt="">
-                <p><a class=goodName href='useless.html'>Виделка</a></p>
-                <p><span class="price">20</span><button>Купити</button></p>
-            </div>
-            <div class="cell">
-                <img src="http://placekitten.com/300/300?43" alt="">
-                <p><a class=goodName href='useless.html'>Чашка </a></p>
-                <s class='old_price'>165</s>
-                <p><span class="price">40</span><button>Купити</button></p>
-            </div>
-            <div class="cell">
-                <img src="http://placekitten.com/300/300?67" alt="">
-                <p><a class=goodName href='useless.html'>Стакан</a></p>
-                <p><span class="price">35</span><button>Купити</button></p>
-            </div>
-            <div class="cell">
-                <img src="http://placekitten.com/300/300?32" alt="">
-                <p><a class=goodName href='useless.html'>Ніж</a></p>
-                <p><span class="price">43</span><button>Купити</button></p>
-            </div>
-            <div class="cell">
-                <img src="http://placekitten.com/300/300?97" alt="">
-                <p><a class=goodName href='useless.html'>Чайник</a></p>
-                <p><span class="price">80</span><button>Купити</button></p>
-            </div>
-            <div class="cell">
-                <img src="http://placekitten.com/300/300?321" alt="">
-                <p><a class=goodName href='useless.html'>Ложка</a></p>
-                <p><span class="price">36</span><button>Купити</button></p>
-            </div>
-            <div class="cell">
-                <img src="http://placekitten.com/300/300?124" alt="">
-                <p><a class=goodName href='useless.html'>Блюдце</a></p>
-                <p><span class="price">96</span><button>Купити</button></p>
-            </div>
-            <div class="cell">
-                <img src="http://placekitten.com/300/300?98" alt="">
-                <p><a class=goodName href='useless.html'>Кружка</a></p>
-                <s class='old_price'>265</s>
-                <p><span class="price">210</span><button>Купити</button></p>
-            </div>
-            <div class="cell">
-                <img src="http://placekitten.com/300/300?76" alt="">
-                <p><a class=goodName href='useless.html'>Бокал</a></p>
-                <p><span class="price">350</span><button>Купити</button></p>
-            </div>
-            <div class="cell">
-                <img src="http://placekitten.com/300/300?43" alt="">
-                <p><a class=goodName href='useless.html'>Кавник</a></p>
-                <p><span class="price">500</span><button>Купити</button></p>
-            </div>
-            <div class="cell">
-                <img src="http://placekitten.com/300/300?22" alt="">
-                <p><a class=goodName href='useless.html'>Миска</a></p>
-                <p><span class="price">91</span><button>Купити</button></p>
-            </div>
-            <div class="cell">
-                <img src="http://placekitten.com/300/300?21" alt="">
-                <p><a class=goodName href='useless.html'>Перечниця</a></p>
-                <p><span class="price">34</span><button>Купити</button></p>
+    <div id="goods">
+        <div v-for="category in categories" class="list">
+            <h1>{{category.name}}</h1>
+            <div class="grid">
+                <div v-for="cell in category.cells" class="cell">
+                    <img v-bind:src="cell.img_url" alt="">
+                    <p><a class=goodName href='useless.html'>{{cell.name}}</a></p>
+                    <s v-if="cell.old_price != null" class='old_price'>{{cell.old_price}}</s>
+                    <p><span class="price">{{cell.price}}</span><button>Купити</button></p>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="list">
-        <h1>Побутова Техніка </h1>
-        <div class="grid">
-            <div class="cell">
-                <img src="http://placekitten.com/300/300" alt="">
-                <p><a class=goodName href='useless.html'>Пральна Машина</a></p>
-                <s class='old_price'>10650</s>
-                <p><span class="price">9650</span> <button>Купити</button></p>
-            </div>
-            <div class="cell">
-                <img src="http://placekitten.com/300/300?1" alt="">
-                <p><a class=goodName href='useless.html'>Холодильник</a></p>
-                <p><span class="price">11200</span><button>Купити</button></p>
-            </div>
-            <div class="cell">
-                <img src="http://placekitten.com/300/300?245" alt="">
-                <p><a class=goodName href='useless.html'>Посудомийка</a></p>
-                <p><span class="price">6540</span><button>Купити</button></p>
-            </div>
-            <div class="cell">
-                <img src="http://placekitten.com/300/300?4" alt="">
-                <p><a class=goodName href='useless.html'>Бойлер </a></p>
-                <s class='old_price'>6500</s>
-                <p><span class="price">6340</span><button>Купити</button></p>
-            </div>
-            <div class="cell">
-                <img src="http://placekitten.com/300/300?67" alt="">
-                <p><a class=goodName href='useless.html'>Пилосос</a></p>
-                <p><span class="price">3500</span><button>Купити</button></p>
-            </div>
-            <div class="cell">
-                <img src="http://placekitten.com/300/300?32" alt="">
-                <p><a class=goodName href='useless.html'>Морозильна Камера</a></p>
-                <p><span class="price">4300</span><button>Купити</button></p>
-            </div>
-            <div class="cell">
-                <img src="http://placekitten.com/300/300?97" alt="">
-                <p><a class=goodName href='useless.html'>Водонагрівач</a></p>
-                <p><span class="price">2100</span><button>Купити</button></p>
-            </div>
-            <div class="cell">
-                <img src="http://placekitten.com/300/300?321" alt="">
-                <p><a class=goodName href='useless.html'>Обігрівач</a></p>
-                <p><span class="price">3016</span><button>Купити</button></p>
-            </div>
-            <div class="cell">
-                <img src="http://placekitten.com/300/300?124" alt="">
-                <p><a class=goodName href='useless.html'>Мультиварка</a></p>
-                <p><span class="price">9600</span><button>Купити</button></p>
-            </div>
-            <div class="cell">
-                <img src="http://placekitten.com/300/300?98" alt="">
-                <p><a class=goodName href='useless.html'>Хлібопічка</a></p>
-                <s class='old_price'>7650</s>
-                <p><span class="price">7210</span><button>Купити</button></p>
-            </div>
-            <div class="cell">
-                <img src="http://placekitten.com/300/300?76" alt="">
-                <p><a class=goodName href='useless.html'>Блендер</a></p>
-                <p><span class="price">3500</span><button>Купити</button></p>
-            </div>
-            <div class="cell">
-                <img src="http://placekitten.com/300/300?43" alt="">
-                <p><a class=goodName href='useless.html'>Міксер</a></p>
-                <p><span class="price">4500</span><button>Купити</button></p>
-            </div>
-            <div class="cell">
-                <img src="http://placekitten.com/300/300?22" alt="">
-                <p><a class=goodName href='useless.html'>Тостер</a></p>
-                <p><span class="price">1910</span><button>Купити</button></p>
-            </div>
-            <div class="cell">
-                <img src="http://placekitten.com/300/300?21" alt="">
-                <p><a class=goodName href='useless.html'>Ваги</a></p>
-                <p><span class="price">1340</span><button>Купити</button></p>
-            </div>
-        </div>
-    </div>
-
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="./js/main.js"></script>
 </body>
 <footer>
