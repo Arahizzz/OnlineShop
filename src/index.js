@@ -1,55 +1,82 @@
 import './scss/main.scss';
 
-console.log(`The time is ${new Date()}`);
+Vue.use(Vuex);
 
-var goods = new Vue({
-    el: "#goods",
-    data: {
-        categories: [
-            {
-                name: "Посуд",
-                cells: [
-                    {
-                        name: "Кастрюля",
-                        old_price: 150,
-                        price: 125,
-                        img_url: "http://placekitten.com/200/200"
-                    },
-                    {
-                        name: "Тарілка",
-                        price: 150,
-                        img_url: "http://placekitten.com/200/200"
-                    }
-                ]
-            },
-            {
-                name: "Техніка",
-                cells: [
-                    {
-                        name: "Посудомийка",
-                        price: 2500,
-                        img_url: "http://placekitten.com/200/200"
-                    },
-                    {
-                        name: "Чайник",
-                        price: 150,
-                        old_price: 200,
-                        img_url: "http://placekitten.com/200/200"
-                    }
-                ]
-            }
-        ]
+const store = new Vuex.Store({
+    state: {
+        showModal: false,
+        categories: [{
+            name: "adasd",
+            cells:[]
+        }],
+    },
+    mutations: {
+        toggleModal() {
+            this.state.showModal = !this.state.showModal
+        },
+        updateCategories(state, categories) {
+            state.categories = categories;
+        }
+    },
+    actions: {
+        fetchData(context) {
+            fetch('https://nit.tron.net.ua/api/category/list').then((response) => {
+                response.json().then((json) => {
+                    //context.commit('updateCategories', json);
+                    //var ids = Array.from(json, element => element.id);
+                    var categories = [];
+                    json.forEach(element => {
+                        fetch('https://nit.tron.net.ua/api/product/list/category/' + element.id)
+                            .then(categoryRespone => categoryRespone.json().then((productList) => {
+                            var category = {
+                                name: element.name,
+                                cells: productList.map((product)=> {
+                                    return {
+                                        name: product.name,
+                                        img_url: product.image_url,
+                                        id: product.id,
+                                        price: product.special_price != null ? product.special_price : product.price,
+                                        old_price: product.special_price != null ? product.price : null,
+                                    }
+                                })
+                            }
+                                categories.push(category);    
+                        }))
+                    });
+                    store.commit('updateCategories', categories);
+                })
+            })
+        }
     }
-    // options
 });
 
-// Vue.component('good-cell',
-// {
-//     props: ['name', 'price', 'old_price'],
-//     template: '<div class="cell">'+
-//                 '<img src="http://placekitten.com/300/300" alt="">'+
-//                 '<p><a class=goodName href="useless.html">Кастрюля</a></p>'+
-//                 '<s class=old_price>{{ol}}</s>'+
-//                 '<p><span class="price">150</span><button>Купити</button></p>'+
-//             '</div>'
-// });
+store.dispatch('fetchData');
+
+var goods = new Vue({
+    store,
+    el: "#goods",
+    computed: {
+        categories() {
+            return store.state.categories;
+        }
+    },
+    options:{}
+});
+
+var cart = new Vue({
+    el: "#cart",
+    methods: {
+        toggleModal() {
+            store.commit('toggleModal')
+        }
+    }
+});
+
+var modal = new Vue({
+    el: "#myModal",
+    computed: {
+        displayModal() {
+            return store.state.showModal;
+        }
+    },
+});

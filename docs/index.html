@@ -17,21 +17,7 @@
                 <p>Усе для дому</p>
             </div>
         </a>
-        <div id="categories-container">
-            <a href="category1.html">
-                <div class="categoryblock">Category 1</div>
-            </a>
-            <a href="category2.html">
-                <div class="categoryblock">Category 2</div>
-            </a>
-            <a href="category3.html">
-                <div class="categoryblock">Category 3</div>
-            </a>
-            <a href="useless.html">
-                <div class="categoryblock">Category 4</div>
-            </a>
-        </div>
-        <div id="cart">
+        <div v-on:click="toggleModal" id="cart">
             <div>
                 <p id="counter">0</p>
                 <img src="https://img.icons8.com/color/48/000000/shopping-cart.png">
@@ -39,7 +25,8 @@
         </div>
     </header>
 
-    <div id="myModal" class="modal">
+
+    <div v-if="displayModal" id="myModal" class="modal">
         <!-- Modal content -->
         <div class="modal-content">
             <span class="close">&times;</span>
@@ -53,15 +40,18 @@
             <div class="grid">
                 <div v-for="cell in category.cells" class="cell">
                     <img v-bind:src="cell.img_url" alt="">
-                    <p><a class=goodName href='useless.html'>{{cell.name}}</a></p>
-                    <s v-if="cell.old_price != null" class='old_price'>{{cell.old_price}}</s>
-                    <p><span class="price">{{cell.price}}</span><button>Купити</button></p>
+                    <div class="bottom">
+                        <p><a class=goodName href='useless.html'>{{cell.name}}</a></p>
+                        <div><s v-if="cell.old_price != null" class='old_price'>{{cell.old_price}}</s></div>
+                        <p><span class="price">{{cell.price}}</span><button>Купити</button></p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vuex/3.1.1/vuex.js"></script>
     <script src="./js/main.js"></script>
 </body>
 <footer>

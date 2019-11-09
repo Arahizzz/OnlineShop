@@ -14,7 +14,6 @@ h1{
 
 /* The Modal (background) */
 .modal {
-    display: none; 
     position: fixed;
     z-index: 1; 
     left: 0;
@@ -182,15 +181,34 @@ header {
 }
 
 .cell {
+    position: relative;
     display: inline-block;
     border: 1px solid gray;
     padding: 30px;
-    width: 230px;
+    width: 300px;
     height: 340px;
     transition: background-color .2s step-end,
     transform .2s ease, 
     box-shadow .2s ease;
 }
+
+.cell img{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    max-width:300px;
+    max-height:250px;
+    width: auto;
+    height: auto;
+}
+
+.cell .bottom {
+    position: absolute;
+    display: block;
+    bottom: 0;
+    padding-bottom: 15px;
+}
+
 
 .cell:hover {
     transform: scale(1.15);
