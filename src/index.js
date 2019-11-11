@@ -9,13 +9,32 @@ const store = new Vuex.Store({
             name: "adasd",
             cells:[]
         }],
+        cart: {
+            counter: 0,
+            totalPrice: 0,
+            goods:[]
+        },
     },
     mutations: {
         toggleModal() {
             this.state.showModal = !this.state.showModal
         },
         updateCategories(state, categories) {
-            state.categories = categories;
+            this.state.categories = categories;
+        },
+        updateCart(state, cart) {
+            this.state.cart.goods = cart;
+            store.commit("updateCartCounter");
+        },
+        updateCartCounter() {
+            var totalCount = 0;
+            var totalPrice = 0;
+            this.state.cart.goods.forEach(function (item) {
+                totalCount += item.quantity;
+                totalPrice += item.price * item.quantity;
+            });
+            this.state.cart.counter = totalCount;
+            this.state.cart.totalPrice = totalPrice;
         }
     },
     actions: {
@@ -46,7 +65,7 @@ const store = new Vuex.Store({
                     store.commit('updateCategories', categories);
                 })
             })
-        }
+        },
     }
 });
 
@@ -60,11 +79,50 @@ var goods = new Vue({
             return store.state.categories;
         }
     },
-    options:{}
+});
+
+Vue.component('cell', {
+    props: ['cell'],
+    methods: {
+        addToCart (cell) {
+            var good = {
+                name: cell.name,
+                img_url: cell.img_url,
+                id: cell.id,
+                price: cell.price,
+                quantity: 1
+            }
+            var cart = store.state.cart;
+            for (var i = 0; i < cart.length; i++){
+                if (cart[i].id == good.id) {
+                    cart[i].quantity++;
+                    store.commit("updateCartCounter");
+                    return;
+                }
+            }
+            cart.push(good);
+            store.commit("updateCart", cart);
+        }
+    },
+    template: `
+    <div class="cell">
+    <img :src="cell.img_url" alt="">
+    <div class="bottom">
+        <p><a class=goodName href='useless.html'>{{cell.name}}</a></p>
+        <div><s v-if="cell.old_price != null" class='old_price'>{{cell.old_price}}</s></div>
+        <p><span class="price">{{cell.price}}</span><button v-on:click="addToCart(cell)">Купити</button></p>
+    </div>
+    </div>
+    `
 });
 
 var cart = new Vue({
     el: "#cart",
+    computed: {
+        counter() {
+            return store.state.counter;
+        }
+    },
     methods: {
         toggleModal() {
             store.commit('toggleModal')

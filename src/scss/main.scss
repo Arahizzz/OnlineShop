@@ -209,6 +209,10 @@ header {
     padding-bottom: 15px;
 }
 
+.cell button {
+    float: initial;
+}
+
 
 .cell:hover {
     transform: scale(1.15);
