@@ -29,8 +29,12 @@
     <div v-if="displayModal" id="myModal" class="modal">
         <!-- Modal content -->
         <div class="modal-content">
-            <span class="close">&times;</span>
-            <div id="totalPrice">Загальна вартість: <span class="price">0</span></div>
+            <span v-on:click="toggleModal()" class="close">&times;</span>
+            <div id="totalPrice">Загальна вартість: <span class="price">{{totalPrice}}</span></div>
+            <cart-item v-for="(good, index) in goodsInCart" v-bind:key="good.id" v-bind:item="good"
+                v-bind:index="index"></cart-item>
+            <button v-on:click="clearCart" v-if="displayBottom" id="clearCart">Очистити кошик</button>
+            <button v-if="displayBottom" id="checkout">Оформити замовлення</button>
         </div>
     </div>
 
@@ -38,17 +42,14 @@
         <div v-for="category in categories" class="list">
             <h1>{{category.name}}</h1>
             <div class="grid">
-                    <cell
-                    v-for="cell in category.cells"
-                    v-bind:key="cell.id"
-                    v-bind:cell="cell"
-                    ></cell>
+                <cell v-for="cell in category.cells" v-bind:key="cell.id" v-bind:cell="cell"></cell>
             </div>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vuex/3.1.1/vuex.js"></script>
+    <script src="https://unpkg.com/vuex-persistedstate/dist/vuex-persistedstate.umd.js"></script>
     <script src="./js/main.js"></script>
 </body>
 <footer>

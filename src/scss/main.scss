@@ -73,7 +73,10 @@ h1{
 }
 
 .good img{
-    width: 75px;
+    max-width: 75px;
+    max-height: 75px;
+    width: auto;
+    height: auto;
     margin-left: 25px;
     margin-right: 25px;
 }

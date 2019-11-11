@@ -6,7 +6,7 @@ const store = new Vuex.Store({
     state: {
         showModal: false,
         categories: [{
-            name: "adasd",
+            name: "Category",
             cells:[]
         }],
         cart: {
@@ -15,6 +15,9 @@ const store = new Vuex.Store({
             goods:[]
         },
     },
+    plugins: [createPersistedState({
+        paths:['cart']
+    })],
     mutations: {
         toggleModal() {
             this.state.showModal = !this.state.showModal
@@ -22,8 +25,12 @@ const store = new Vuex.Store({
         updateCategories(state, categories) {
             this.state.categories = categories;
         },
-        updateCart(state, cart) {
-            this.state.cart.goods = cart;
+        updateCart(state, goods) {
+            this.state.cart.goods = goods;
+            store.commit("updateCartCounter");
+        },
+        replaceCart(state, cart) {
+            this.state.cart = cart;
             store.commit("updateCartCounter");
         },
         updateCartCounter() {
@@ -92,16 +99,16 @@ Vue.component('cell', {
                 price: cell.price,
                 quantity: 1
             }
-            var cart = store.state.cart;
-            for (var i = 0; i < cart.length; i++){
-                if (cart[i].id == good.id) {
-                    cart[i].quantity++;
+            var goods = store.state.cart.goods;
+            for (var i = 0; i < goods.length; i++){
+                if (goods[i].id == good.id) {
+                    goods[i].quantity++;
                     store.commit("updateCartCounter");
                     return;
                 }
             }
-            cart.push(good);
-            store.commit("updateCart", cart);
+            goods.push(good);
+            store.commit("updateCart", goods);
         }
     },
     template: `
@@ -116,25 +123,88 @@ Vue.component('cell', {
     `
 });
 
+Vue.component('cart-item', {
+    props: ['item', 'index'],
+    methods: {
+        removeItem(index) {
+            var goods = store.state.cart.goods;
+            goods.splice(index, 1);
+            store.commit('updateCart', goods);
+        },
+        increment(index) {
+            var goods = store.state.cart.goods;
+            goods[index].quantity++;
+            store.commit('updateCart', goods);
+        },
+        decrement(index) {
+            var goods = store.state.cart.goods;
+            if (goods[index].quantity > 1) {
+                goods[index].quantity--;
+                store.commit('updateCart', goods);
+            }
+        }
+    },
+    template: `
+    <div class="good">
+        <div>
+            <p class="cartIndex">{{index + 1}}</p>
+            <img :src="item.img_url"> 
+            <div>
+            <p>{{item.name}}</p>
+            <p class="price">{{item.price}}</p>
+            </div>
+            </div>
+            <div>
+            <p v-on:click="decrement(index)" class="minus">-</p>
+            <p class="quantity">{{item.quantity}}</p>
+            <p v-on:click="increment(index)" class="plus">+</p>
+            <img v-on:click="removeItem(index)" class="removeButton" src="https://img.icons8.com/wired/64/000000/filled-trash.png">
+        </div>
+    </div>
+    `
+});
+
 var cart = new Vue({
     el: "#cart",
     computed: {
         counter() {
-            return store.state.counter;
+            return store.state.cart.counter;
         }
     },
     methods: {
         toggleModal() {
             store.commit('toggleModal')
-        }
+        },
     }
 });
 
 var modal = new Vue({
     el: "#myModal",
+    methods: {
+        toggleModal() {
+            store.commit('toggleModal')
+        },
+        clearCart() {
+            var cart = {
+                counter: 0,
+                totalPrice: 0,
+                goods:[]
+            }
+            store.commit('replaceCart', cart);
+        }
+    },
     computed: {
         displayModal() {
             return store.state.showModal;
+        },
+        totalPrice() {
+            return store.state.cart.totalPrice;
+        },
+        goodsInCart() {
+            return store.state.cart.goods;
+        },
+        displayBottom() {
+            return store.state.cart.counter > 0;
         }
     },
 });
