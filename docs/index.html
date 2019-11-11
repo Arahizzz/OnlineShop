@@ -11,7 +11,7 @@
 
 <body>
     <header>
-        <a href="category3.html">
+        <a href="index.html">
             <div id="logo">
                 <img src="https://img.icons8.com/cotton/64/000000/shopping.png">
                 <p>Усе для дому</p>
@@ -37,17 +37,11 @@
             <button v-if="displayBottom" id="checkout">Оформити замовлення</button>
         </div>
     </div>
-
-    <div id="goods">
-        <div v-for="category in categories" class="list">
-            <h1>{{category.name}}</h1>
-            <div class="grid">
-                <cell v-for="cell in category.cells" v-bind:key="cell.id" v-bind:cell="cell"></cell>
-            </div>
-        </div>
+    <div id="app">
+    <router-view></router-view>
     </div>
-
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router@2.0.0/dist/vue-router.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vuex/3.1.1/vuex.js"></script>
     <script src="https://unpkg.com/vuex-persistedstate/dist/vuex-persistedstate.umd.js"></script>
     <script src="./js/main.js"></script>

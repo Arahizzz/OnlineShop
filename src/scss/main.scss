@@ -55,6 +55,9 @@ h1{
     cursor: pointer;
 }
 
+#goods {
+    margin-bottom: 250px;
+}
 .good {
     display: flex;
     vertical-align: middle;
@@ -252,14 +255,16 @@ button {
 
 .old_price {
     color: rgb(235, 26, 26);
-    margin-left: 10px;
+    margin-left: 15px;
 }
 
 footer{
+    clear: both;
     padding: 30px;
     height: 150px;
     background-color: rgba(219, 223, 240, 0.945);
     text-align: left;
+    margin-top: -200px;
 }
 
 @media print {

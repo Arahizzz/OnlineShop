@@ -1,6 +1,9 @@
 import './scss/main.scss';
+import productList from './views/productList.vue'
+import productView from './views/productView.vue'
 
 Vue.use(Vuex);
+Vue.use(VueRouter);
 
 const store = new Vuex.Store({
     state: {
@@ -56,7 +59,8 @@ const store = new Vuex.Store({
                             .then(categoryRespone => categoryRespone.json().then((productList) => {
                             var category = {
                                 name: element.name,
-                                cells: productList.map((product)=> {
+                                cells: productList.map((product) => {
+                                    console.log(product);
                                     return {
                                         name: product.name,
                                         img_url: product.image_url,
@@ -78,50 +82,20 @@ const store = new Vuex.Store({
 
 store.dispatch('fetchData');
 
-var goods = new Vue({
-    store,
-    el: "#goods",
-    computed: {
-        categories() {
-            return store.state.categories;
-        }
-    },
+const routes = [
+    { path: '/', component: productList },
+    { path: '/product/:id', component: productView }
+];
+
+const router = new VueRouter({
+    routes // сокращённая запись для `routes: routes`
 });
 
-Vue.component('cell', {
-    props: ['cell'],
-    methods: {
-        addToCart (cell) {
-            var good = {
-                name: cell.name,
-                img_url: cell.img_url,
-                id: cell.id,
-                price: cell.price,
-                quantity: 1
-            }
-            var goods = store.state.cart.goods;
-            for (var i = 0; i < goods.length; i++){
-                if (goods[i].id == good.id) {
-                    goods[i].quantity++;
-                    store.commit("updateCartCounter");
-                    return;
-                }
-            }
-            goods.push(good);
-            store.commit("updateCart", goods);
-        }
-    },
-    template: `
-    <div class="cell">
-    <img :src="cell.img_url" alt="">
-    <div class="bottom">
-        <p><a class=goodName href='useless.html'>{{cell.name}}</a></p>
-        <div><s v-if="cell.old_price != null" class='old_price'>{{cell.old_price}}</s></div>
-        <p><span class="price">{{cell.price}}</span><button v-on:click="addToCart(cell)">Купити</button></p>
-    </div>
-    </div>
-    `
-});
+var app = new Vue({
+    router,
+    store
+}).$mount('#app')
+
 
 Vue.component('cart-item', {
     props: ['item', 'index'],
