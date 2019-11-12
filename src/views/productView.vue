@@ -80,7 +80,6 @@ export default {
         margin-left: 50px;
         margin-right: 25px;
         display: flex;
-        min-height: 800px;
         overflow: auto;
 
         div > img {

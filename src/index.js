@@ -2,6 +2,7 @@ import './scss/main.scss';
 import productList from './views/productList.vue'
 import productView from './views/productView.vue'
 import cartItem from './components/cart-item.vue'
+import modalCart from './components/modal.vue'
 import checkout from './views/checkout.vue';
 import Circle from 'vue-loading-spinner/src/components/Circle.vue';
 
@@ -10,6 +11,7 @@ Vue.use(VueRouter);
 
 Vue.component('cart-item', cartItem);
 Vue.component('circle-spinner', Circle);
+Vue.component('modal-cart', modalCart);
 
 const store = new Vuex.Store({
     state: {
@@ -90,7 +92,8 @@ store.dispatch('fetchData');
 const routes = [
     { path: '/', component: productList },
     { path: '/product/:id', component: productView },
-    { path: '/checkout', component: checkout}
+    { name:'checkout', path: '/checkout', component: checkout },
+    { path: '/product/checkout', redirect: {name : '/checkout'}}
 ];
 
 const router = new VueRouter({
@@ -115,40 +118,4 @@ var cart = new Vue({
             store.commit('toggleModal')
         },
     }
-});
-
-var modal = new Vue({
-    el: "#myModal",
-    store,
-    methods: {
-        toggleModal() {
-            store.commit('toggleModal')
-        },
-        clearCart() {
-            var cart = {
-                counter: 0,
-                totalPrice: 0,
-                goods:[]
-            }
-            store.commit('replaceCart', cart);
-        },
-        checkout() {
-            store.commit('toggleModal');
-            router.push({ path: 'checkout' });
-        }
-    },
-    computed: {
-        displayModal() {
-            return store.state.showModal;
-        },
-        totalPrice() {
-            return store.state.cart.totalPrice;
-        },
-        goodsInCart() {
-            return store.state.cart.goods;
-        },
-        displayBottom() {
-            return store.state.cart.counter > 0;
-        }
-    },
 });

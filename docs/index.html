@@ -25,19 +25,8 @@
         </div>
     </header>
 
-
-    <div v-if="displayModal" id="myModal" class="modal">
-        <!-- Modal content -->
-        <div class="modal-content">
-            <span v-on:click="toggleModal()" class="close">&times;</span>
-            <div id="totalPrice">Загальна вартість: <span class="price">{{totalPrice}}</span></div>
-            <cart-item v-for="(good, index) in goodsInCart" v-bind:key="good.id" v-bind:item="good"
-                v-bind:index="index"></cart-item>
-            <button v-on:click="clearCart" v-if="displayBottom" id="clearCart">Очистити кошик</button>
-            <button v-on:click="checkout" v-if="displayBottom">Оформити замовлення</button>
-        </div>
-    </div>
     <div id="app">
+    <modal-cart></modal-cart>   
     <router-view></router-view>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
