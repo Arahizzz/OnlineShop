@@ -2,6 +2,7 @@ import './scss/main.scss';
 import productList from './views/productList.vue'
 import productView from './views/productView.vue'
 import cartItem from './components/cart-item.vue'
+import checkout from './views/checkout.vue';
 import Circle from 'vue-loading-spinner/src/components/Circle.vue';
 
 Vue.use(Vuex);
@@ -88,7 +89,8 @@ store.dispatch('fetchData');
 
 const routes = [
     { path: '/', component: productList },
-    { path: '/product/:id', component: productView }
+    { path: '/product/:id', component: productView },
+    { path: '/checkout', component: checkout}
 ];
 
 const router = new VueRouter({
@@ -129,6 +131,10 @@ var modal = new Vue({
                 goods:[]
             }
             store.commit('replaceCart', cart);
+        },
+        checkout() {
+            store.commit('toggleModal');
+            router.push({ path: 'checkout' });
         }
     },
     computed: {
