@@ -1,5 +1,8 @@
 <template>
-    <div v-if="loading == false" id="productView">
+    <div v-if="loading" id="productView">
+        <circle-spinner></circle-spinner>
+    </div>
+    <div v-else id="productView">
         <div>
             <img :src="product.image_url" alt="">
         </div>
@@ -31,12 +34,13 @@ export default {
   },
   watch: {
     // call again the method if the route changes
-    '$route': 'fetchData'
+    '$route': 'fetchData',
   },
   created () {
     // fetch the data when the view is created and the data is
     // already being observed
-    this.fetchData()
+    this.fetchData();
+    window.scrollTo(0, 0);
   },
   methods: {
     fetchData () {
@@ -73,12 +77,10 @@ export default {
 
 <style lang="scss">
     #productView {
-        margin-top: 50px;
-        margin-bottom: 175px;
         margin-left: 50px;
+        margin-right: 25px;
         display: flex;
         min-height: 800px;
-        align-items: center;
         overflow: auto;
 
         div > img {

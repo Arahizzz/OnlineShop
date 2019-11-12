@@ -12,6 +12,12 @@ h1{
     text-align: center;
 }
 
+.spinner {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+}
+
 /* The Modal (background) */
 .modal {
     position: fixed;
@@ -55,9 +61,6 @@ h1{
     cursor: pointer;
 }
 
-#goods {
-    margin-bottom: 250px;
-}
 .good {
     display: flex;
     vertical-align: middle;
@@ -159,8 +162,12 @@ header {
     transition: 0.5s ease;
 }
 
+#app {
+    margin-top: 150px;
+    margin-bottom: 250px;
+}
+
 .list {
-    margin-top: 125px;
     margin-left: 25px;
     margin-bottom: 10px;
 }
@@ -223,6 +230,7 @@ header {
 .cell:hover {
     transform: scale(1.15);
     box-shadow: 0px 0px 4px 4px lightgrey;
+    z-index: 2;
     background: white;
     transition: babackground-color .2s step-start,
     transform .2s ease, 

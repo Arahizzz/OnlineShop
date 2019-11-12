@@ -1,9 +1,14 @@
 import './scss/main.scss';
 import productList from './views/productList.vue'
 import productView from './views/productView.vue'
+import cartItem from './components/cart-item.vue'
+import Circle from 'vue-loading-spinner/src/components/Circle.vue';
 
 Vue.use(Vuex);
 Vue.use(VueRouter);
+
+Vue.component('cart-item', cartItem);
+Vue.component('circle-spinner', Circle);
 
 const store = new Vuex.Store({
     state: {
@@ -60,7 +65,6 @@ const store = new Vuex.Store({
                             var category = {
                                 name: element.name,
                                 cells: productList.map((product) => {
-                                    console.log(product);
                                     return {
                                         name: product.name,
                                         img_url: product.image_url,
@@ -88,55 +92,14 @@ const routes = [
 ];
 
 const router = new VueRouter({
-    routes // сокращённая запись для `routes: routes`
+    routes,
 });
 
 var app = new Vue({
     router,
     store
-}).$mount('#app')
+}).$mount('#app');
 
-
-Vue.component('cart-item', {
-    props: ['item', 'index'],
-    methods: {
-        removeItem(index) {
-            var goods = store.state.cart.goods;
-            goods.splice(index, 1);
-            store.commit('updateCart', goods);
-        },
-        increment(index) {
-            var goods = store.state.cart.goods;
-            goods[index].quantity++;
-            store.commit('updateCart', goods);
-        },
-        decrement(index) {
-            var goods = store.state.cart.goods;
-            if (goods[index].quantity > 1) {
-                goods[index].quantity--;
-                store.commit('updateCart', goods);
-            }
-        }
-    },
-    template: `
-    <div class="good">
-        <div>
-            <p class="cartIndex">{{index + 1}}</p>
-            <img :src="item.img_url"> 
-            <div>
-            <p>{{item.name}}</p>
-            <p class="price">{{item.price}}</p>
-            </div>
-            </div>
-            <div>
-            <p v-on:click="decrement(index)" class="minus">-</p>
-            <p class="quantity">{{item.quantity}}</p>
-            <p v-on:click="increment(index)" class="plus">+</p>
-            <img v-on:click="removeItem(index)" class="removeButton" src="https://img.icons8.com/wired/64/000000/filled-trash.png">
-        </div>
-    </div>
-    `
-});
 
 var cart = new Vue({
     el: "#cart",
@@ -154,6 +117,7 @@ var cart = new Vue({
 
 var modal = new Vue({
     el: "#myModal",
+    store,
     methods: {
         toggleModal() {
             store.commit('toggleModal')
