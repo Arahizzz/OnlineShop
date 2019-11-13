@@ -2,6 +2,7 @@
     <div v-if="loading" id="productView">
         <circle-spinner></circle-spinner>
     </div>
+    <div v-else-if="error"><h1>Товар з даним ID не знайдено</h1></div>
     <div v-else id="productView">
         <div>
             <img :src="product.image_url" alt="">
@@ -24,6 +25,7 @@ export default {
     data () {
     return {
       loading: true,
+      error: false,
       product: {
           name: "",
           price: 0,
@@ -44,11 +46,15 @@ export default {
   },
   methods: {
     fetchData () {
-      this.error = this.post = null
       this.loading = true
       // replace `getPost` with your data fetching util / API wrapper
       fetch('https://nit.tron.net.ua/api/product/' + this.$route.params.id).then((response) => {
-          response.json().then((product) => this.product = product);
+          if(response.status == 200)
+            response.json().then((product) => this.product = product);
+          else this.error = true;
+          this.loading = false;
+      }).catch(error => {
+          this.error = true;
           this.loading = false;
       });
     },
