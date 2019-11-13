@@ -19,12 +19,7 @@ export default {
             this.$store.commit('toggleModal')
         },
         clearCart() {
-            var cart = {
-                counter: 0,
-                totalPrice: 0,
-                goods:[]
-            }
-            this.$store.commit('replaceCart', cart);
+            this.$store.dispatch('clearCart');
         },
         checkout() {
             this.$store.commit('toggleModal');

@@ -11,10 +11,10 @@
             <p>Ваш Телефон</p>
             <input v-model="phone" placeholder="380976543210">
             <p v-if="correctPhone==false" class="error">Невірний формат телефону</p>
-            <p>Ваша Email</p>
+            <p>Ваш Email</p>
             <input v-model="email" placeholder="email@example.com">
             <p v-if="correctEmail==false" class="error">Невірний формат електроної пошти</p>
-            <button>Пітдвердити замовлення</button>
+            <button v-on:click="confirm">Пітдвердити замовлення</button>
         </div>
     </div>
     <div v-else id="checkout"><h1>Ваша корзина порожня</h1></div>
@@ -23,7 +23,7 @@
 <script>
 export default {
     
-    data: function (){
+    data (){
         return {
         name: "",
         phone: "",
@@ -33,6 +33,9 @@ export default {
         correctEmail : true,
         }
     },
+    created(){
+        window.scrollTo(0, 0);
+    },
     computed: {
         goodsInCart() {
             return this.$store.state.cart.goods;
@@ -40,8 +43,12 @@ export default {
     },
     methods: {
         confirm(){
-            correctName = /(['a-zA-Z\u00C0-\u017F\u0370-\u18AF]+\s){2}['a-zA-Z\u00C0-\u017F\u0370-\u18AF]+/.test(name);
-            correctPhone = /^+?\d{9-12}/.test(correctPhone);
+            this.correctName = /['a-zA-Z\u00C0-\u017F\u0370-\u18AF]+$/.test(this.name);
+            this.correctPhone = /^\+?\d{10,12}$/.test(this.phone);
+            this.correctEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(this.email);
+            if(this.correctName && this.correctPhone && this.correctEmail){
+                this.$router.push({name: 'confirm', params: {name : this.name, phone :this.phone, email: this.email}});
+            }
         }
     }
 }
@@ -55,7 +62,6 @@ export default {
     #checkout {
         margin-left: 50px;
         margin-right: 50px; 
-        min-height: 800px;
 
         .form {
             display: flex;

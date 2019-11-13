@@ -4,6 +4,7 @@ import productView from './views/productView.vue'
 import cartItem from './components/cart-item.vue'
 import modalCart from './components/modal.vue'
 import checkout from './views/checkout.vue';
+import confirmation from './views/confirmation.vue'
 import Circle from 'vue-loading-spinner/src/components/Circle.vue';
 
 Vue.use(Vuex);
@@ -84,6 +85,14 @@ const store = new Vuex.Store({
                 })
             })
         },
+        clearCart() {
+            var cart = {
+                counter: 0,
+                totalPrice: 0,
+                goods:[]
+            }
+            store.commit('replaceCart', cart);
+        },
     }
 });
 
@@ -92,8 +101,8 @@ store.dispatch('fetchData');
 const routes = [
     { path: '/', component: productList },
     { path: '/product/:id', component: productView },
-    { name:'checkout', path: '/checkout', component: checkout },
-    { path: '/product/checkout', redirect: {name : '/checkout'}}
+    { name: 'checkout', path: '/checkout', component: checkout },
+    { name: 'confirm', path: '/checkout/confirm', component: confirmation}
 ];
 
 const router = new VueRouter({
