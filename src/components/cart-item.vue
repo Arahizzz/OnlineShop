@@ -4,11 +4,11 @@
             <p class="cartIndex">{{index + 1}}</p>
             <img :src="item.img_url"> 
             <div>
-            <p>{{item.name}}</p>
+            <p class="name">{{item.name}}</p>
             <p class="price">{{item.price}}</p>
             </div>
             </div>
-            <div>
+            <div class="controls">
             <p v-on:click="decrement(index)" class="minus">-</p>
             <p class="quantity">{{item.quantity}}</p>
             <p v-on:click="increment(index)" class="plus">+</p>

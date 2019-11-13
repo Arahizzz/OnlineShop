@@ -38,6 +38,14 @@ h1{
     padding: 20px;
     border: 1px solid #888;
     width: 60%;
+
+    @media (max-width: 1100px){
+        margin: 0% auto;
+        width: 90%;
+        *{
+        font-size: 18px;
+        }
+    }
 }
 
 .modal-content button {
@@ -61,10 +69,6 @@ h1{
     cursor: pointer;
 }
 
-#goods {
-    text-align: center;
-}
-
 .good {
     display: flex;
     vertical-align: middle;
@@ -75,6 +79,20 @@ h1{
 
 .good + .good {
     margin-top: 10px;
+}
+
+.good .controls {
+    display: flex;
+    align-items: center;
+}
+
+@media (max-width: 1100px){
+    .good {
+        line-height: 25px;
+    }
+    .good, .good + .good {
+        margin-top: 7px;
+    }
 }
 
 .good *{
@@ -100,8 +118,29 @@ h1{
     line-height: 1;
 }
 
+.minus {
+    margin-left: 22px;
+}
+
 .plus{
     margin-right: 15px;
+}
+
+@media (max-width: 1100px){
+    .plus, .minus, .quantity {
+        font-size: 28px;
+        margin-bottom: 20px;
+        margin: 10px;
+    }
+
+    .good .removeButton {
+        width: 40px;
+        height: 40px;
+    }
+
+    .good img {
+        width: 40px;
+    }
 }
 
 header {
@@ -128,7 +167,7 @@ header {
 #categories-container {
     display: inline-block;
     overflow:hidden;
-    width: 60%;
+    width: 80%;
     line-height: 110px;
 }
 
@@ -141,7 +180,11 @@ header {
     text-align: center;
     transition: background-color 0.2s linear;
     line-height: 110px;
-    vertical-align: middle
+    vertical-align: middle;
+
+    @media (max-width: 1100px) {
+        p {font-size: 22px;}
+    }
 }
 
 #cart:hover, .plus:hover, .minus:hover, .removeButton:hover{
@@ -156,8 +199,8 @@ header {
     display: inline-block;
     vertical-align: middle;
     padding-top: 5px;
-    padding-left: 4%;
-    padding-right: 4%;
+    padding-left: 1%;
+    padding-right: 1%;
     transition: background-color 0.2s linear;
 }
 

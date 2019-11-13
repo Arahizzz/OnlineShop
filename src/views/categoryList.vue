@@ -8,7 +8,7 @@
   <div v-else id="goods">
     <div v-bind:key="category.name" class="list">
       <h1>{{category.name}}</h1>
-      <p>{{category.description}}</p>
+      <p class="description">{{category.description}}</p>
       <div class="grid">
         <cell v-for="cell in category.cells" v-bind:key="cell.id" v-bind:cell="cell"></cell>
       </div>
@@ -83,3 +83,12 @@ export default {
   }
 };
 </script>
+
+<style lang="scss">
+
+    #goods {
+        .description {
+            text-align: center;
+        }
+    }
+</style>
