@@ -1,6 +1,7 @@
 import './scss/main.scss';
 import productList from './views/productList.vue'
 import productView from './views/productView.vue'
+import categoryList from './views/categoryList.vue'
 import cartItem from './components/cart-item.vue'
 import modalCart from './components/modal.vue'
 import checkout from './views/checkout.vue';
@@ -19,6 +20,7 @@ const store = new Vuex.Store({
         showModal: false,
         categories: [{
             name: "Category",
+            id: -1,
             cells:[]
         }],
         cart: {
@@ -28,6 +30,7 @@ const store = new Vuex.Store({
         },
     },
     plugins: [createPersistedState({
+        storage: window.sessionStorage,
         paths:['cart']
     })],
     mutations: {
@@ -68,6 +71,7 @@ const store = new Vuex.Store({
                             .then(categoryRespone => categoryRespone.json().then((productList) => {
                             var category = {
                                 name: element.name,
+                                id: element.id,
                                 cells: productList.map((product) => {
                                     return {
                                         name: product.name,
@@ -101,6 +105,7 @@ store.dispatch('fetchData');
 const routes = [
     { path: '/', component: productList },
     { path: '/product/:id', component: productView },
+    { name:'category', path:'/category/:id', component: categoryList},
     { name: 'checkout', path: '/checkout', component: checkout },
     { name: 'confirm', path: '/checkout/confirm', component: confirmation}
 ];
@@ -111,15 +116,13 @@ const router = new VueRouter({
 
 var app = new Vue({
     router,
-    store
-}).$mount('#app');
-
-
-var cart = new Vue({
-    el: "#cart",
+    store,
     computed: {
         counter() {
             return store.state.cart.counter;
+        },
+        categories() {
+            return store.state.categories;
         }
     },
     methods: {
@@ -127,4 +130,5 @@ var cart = new Vue({
             store.commit('toggleModal')
         },
     }
-});
+}).$mount('#app');
+

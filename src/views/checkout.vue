@@ -7,7 +7,7 @@
         <div class="form">
             <p>Ваш ПІБ</p>
             <input v-model="name" placeholder="Іванов Іван Іванович">
-            <p v-if="correctName==false" class="error">Уведіть повне Прізвище Ім'я По-батькові</p>
+            <p v-if="correctName==false" class="error">Уведіть ваше повне ім'я</p>
             <p>Ваш Телефон</p>
             <input v-model="phone" placeholder="380976543210">
             <p v-if="correctPhone==false" class="error">Невірний формат телефону</p>
