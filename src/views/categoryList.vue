@@ -37,45 +37,24 @@ export default {
     getCells() {
       this.$store.dispatch("fetchData");
       var id = this.$route.params.id;
-      fetch(
-        "https://nit.tron.net.ua/api/category/" + this.$route.params.id
-      ).then(response => {
-        if (response.status == 200) {
-          response.json().then(product => {
-            var name = product.name;
-            var description = product.description;
-            fetch(
-              "https://nit.tron.net.ua/api/product/list/category/" +
-                this.$route.params.id
-            ).then(categoryRespone =>
-              categoryRespone.json().then(productList => {
-                this.category = {
-                  name: name,
-                  description: description,
-                  cells: productList.map(product => {
-                    return {
-                      name: product.name,
-                      img_url: product.image_url,
-                      id: product.id,
-                      price:
-                        product.special_price != null
-                          ? product.special_price
-                          : product.price,
-                      old_price:
-                        product.special_price != null ? product.price : null
-                    };
-                  })
-                };
-                this.loading = false;
-              })
-            );
-          });
-        }
-        else {
+      fetch("http://127.0.0.1:3000/categories/" + id).then(
+        categoryRespone => {
+          if (categoryRespone.status == 200) {
+            categoryRespone.json().then(productList => {
+              this.category = {
+                name: productList.name,
+                description: productList.description,
+                cells: productList.products
+              };
+              this.loading = false;
+            });
+          }
+          else {
             this.error = true;
             this.loading = false;
+          }
         }
-      });
+      );
     }
   },
   components: {
@@ -85,10 +64,9 @@ export default {
 </script>
 
 <style lang="scss">
-
-    #goods {
-        .description {
-            text-align: center;
-        }
-    }
+#goods {
+  .description {
+    text-align: center;
+  }
+}
 </style>

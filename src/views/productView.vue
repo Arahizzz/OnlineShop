@@ -13,9 +13,9 @@
       <p class="name">{{product.name}}</p>
       <div class="priceColumn">
         <p>
-          <s v-if="product.special_price != null" class="old_price">{{product.price}}</s>
+          <s v-if="product.old_price != null" class="old_price">{{product.old_price}}</s>
         </p>
-        <p class="price">{{product.special_price != null ? product.special_price : product.price}}</p>
+        <p class="price">{{product.price}}</p>
       </div>
       <button v-on:click="addToCart(product)">Купити</button>
       <p class="description">{{product.description}}</p>
@@ -51,7 +51,7 @@ export default {
     fetchData() {
       this.loading = true;
       // replace `getPost` with your data fetching util / API wrapper
-      fetch("https://nit.tron.net.ua/api/product/" + this.$route.params.id)
+      fetch("http://127.0.0.1:3000/products/" + this.$route.params.id)
         .then(response => {
           if (response.status == 200)
             response.json().then(product => (this.product = product));
@@ -68,8 +68,7 @@ export default {
         name: product.name,
         img_url: product.image_url,
         id: product.id,
-        price:
-          product.special_price != null ? product.special_price : product.price,
+        price: product.price,
         quantity: 1
       };
       var goods = this.$store.state.cart.goods;

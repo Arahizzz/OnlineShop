@@ -28,28 +28,38 @@ export default {
   methods: {
     postOrder() {
       var params = this.$route.params;
-      if (params.name != null && params.email != null && params.phone != null) {
-        var products = "";
-        this.$store.state.cart.goods.forEach(element => {
-          products += `&products[${element.id}]=${element.quantity}`;
+      if (
+        params.name != null &&
+        params.email != null &&
+        params.phone != null &&
+        params.address != null
+      ) {
+        var products = this.$store.state.cart.goods.map(element => ({
+          id: element.id,
+          quantity: element.quantity
+        }));
+        var body = JSON.stringify({
+          name: params.name,
+          phone: params.phone,
+          email: params.email,
+          address: params.address,
+          products
         });
-        fetch("https://nit.tron.net.ua/api/order/add", {
+        console.log(body);
+        fetch("http://127.0.0.1:3000/order", {
           method: "post",
           headers: {
-            "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+            Accept: "application/json",
+            "Content-Type": "application/json"
           },
-          body:
-            `token=AV7HST12dxiKplsWKY0s&name=${params.name}&phone=${params.phone}&email=${params.email}` +
-            products
+          body
         })
-          .then(r => r.json())
           .then(response => {
-            if (response.status == "success") this.$store.dispatch("clearCart");
+            console.log(response);
+            if (response.status == 201 || response.status == 200 || response.status == 204) this.$store.dispatch("clearCart");
             else {
               this.error = true;
-              for (let [key, value] of Object.entries(response.errors)) {
-                this.errorInfo += value + "\n";
-              }
+              this.errorInfo = response.body;
             }
             this.loading = false;
           })
@@ -58,11 +68,10 @@ export default {
             this.errorInfo = error;
             this.loading = false;
           });
-      }
-      else {
-          this.error = true;
-          this.errorInfo = "Дані покупця не введені";
-          this.loading = false;
+      } else {
+        this.error = true;
+        this.errorInfo = "Дані покупця не введені";
+        this.loading = false;
       }
     }
   }

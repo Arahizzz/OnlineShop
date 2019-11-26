@@ -22,6 +22,9 @@
       <p>Ваш Email</p>
       <input v-model="email" placeholder="email@example.com" />
       <p v-if="correctEmail==false" class="error">Невірний формат електроної пошти</p>
+      <p>Ваша адреса</p>
+      <input v-model="address" placeholder="Хрещатик, 1" />
+      <p v-if="correctAddress==false" class="error">Заповніть поле адреси</p>
       <button v-on:click="confirm">Пітдвердити замовлення</button>
     </div>
   </div>
@@ -37,9 +40,11 @@ export default {
       name: "",
       phone: "",
       email: "",
+      address: "",
       correctName: true,
       correctPhone: true,
-      correctEmail: true
+      correctEmail: true,
+      correctAddress: true,
     };
   },
   created() {
@@ -62,10 +67,11 @@ export default {
       this.correctEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(
         this.email
       );
-      if (this.correctName && this.correctPhone && this.correctEmail) {
+      this.correctAddress = /['a-zA-Z\u00C0-\u017F\u0370-\u18AF]+$/.test(this.address);
+      if (this.correctName && this.correctPhone && this.correctEmail && this.address) {
         this.$router.push({
           name: "confirm",
-          params: { name: this.name, phone: this.phone, email: this.email }
+          params: { name: this.name, phone: this.phone, email: this.email, address: this.address }
         });
       }
     }
