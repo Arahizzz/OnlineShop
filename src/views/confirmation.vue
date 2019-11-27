@@ -46,7 +46,7 @@ export default {
           products
         });
         console.log(body);
-        fetch("http://127.0.0.1:3000/order", {
+        fetch("https://online-shop-backend.arahizzz.now.sh/order", {
           method: "post",
           headers: {
             Accept: "application/json",

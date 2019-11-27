@@ -65,11 +65,11 @@ const store = new Vuex.Store({
   },
   actions: {
     fetchData(context) {
-      fetch("http://127.0.0.1:3000/categories").then(response => {
+      fetch("https://online-shop-backend.arahizzz.now.sh/categories").then(response => {
         response.json().then(json => {
           var categories = [];
           json.forEach(element => {
-            fetch("http://127.0.0.1:3000/categories/" + element.id).then(
+            fetch("https://online-shop-backend.arahizzz.now.sh/categories/" + element.id).then(
               categoryRespone =>
                 categoryRespone.json().then(productList => {
                   var category = {

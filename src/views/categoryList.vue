@@ -37,7 +37,7 @@ export default {
     getCells() {
       this.$store.dispatch("fetchData");
       var id = this.$route.params.id;
-      fetch("http://127.0.0.1:3000/categories/" + id).then(
+      fetch("https://online-shop-backend.arahizzz.now.sh/categories/" + id).then(
         categoryRespone => {
           if (categoryRespone.status == 200) {
             categoryRespone.json().then(productList => {
