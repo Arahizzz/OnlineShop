@@ -20,7 +20,7 @@
             </div>
         </header>
         <modal-cart></modal-cart>
-        <router-view></router-view>
+        <router-view id="content"></router-view>
     </div>
 </template>
 
@@ -52,3 +52,11 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+    #content {
+    margin-top: 150px;
+    margin-bottom: 250px;
+    min-height: 800px;
+    }
+</style>
