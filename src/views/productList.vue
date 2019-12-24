@@ -1,8 +1,8 @@
 <template>
-  <div v-if="loading" id="productView">
+  <div v-if="loading">
     <circle-spinner></circle-spinner>
   </div>
-  <div v-else id="goods">
+  <div v-else>
     <div v-for="category in categories" v-bind:key="category.name" class="list">
       <h1>{{category.name}}</h1>
       <div class="grid">
