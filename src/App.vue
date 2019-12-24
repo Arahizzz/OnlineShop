@@ -44,7 +44,7 @@ export default {
       this.$store.commit("toggleModal");
     },
     getCategories() {
-      fetch("http://online-shop-backend.arahizzz.now.sh/categories").then(response => response.json()).then(json => this.categories = json);
+      fetch("https://mshop-api.herokuapp.com/api/categories").then(response => response.json()).then(json => this.categories = json);
     }
   },
   created() {
