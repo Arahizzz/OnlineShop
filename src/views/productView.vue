@@ -51,7 +51,7 @@ export default {
     fetchData() {
       this.loading = true;
       // replace `getPost` with your data fetching util / API wrapper
-      fetch("https://online-shop-backend.arahizzz.now.sh/products/" + this.$route.params.id)
+      fetch("https://mshop-api.herokuapp.com/api/products/" + this.$route.params.id)
         .then(response => {
           if (response.status == 200)
             response.json().then(product => (this.product = product));

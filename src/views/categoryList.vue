@@ -35,9 +35,8 @@ export default {
   },
   methods: {
     getCells() {
-      this.$store.dispatch("fetchData");
       var id = this.$route.params.id;
-      fetch("https://online-shop-backend.arahizzz.now.sh/categories/" + id).then(
+      fetch("https://mshop-api.herokuapp.com/api/categories/" + id).then(
         categoryRespone => {
           if (categoryRespone.status == 200) {
             categoryRespone.json().then(productList => {

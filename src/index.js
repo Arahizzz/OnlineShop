@@ -7,6 +7,7 @@ import modalCart from "./components/modal.vue";
 import checkout from "./views/checkout.vue";
 import confirmation from "./views/confirmation.vue";
 import Circle from "vue-loading-spinner/src/components/Circle.vue";
+import app from "./App.vue";
 
 Vue.use(Vuex);
 Vue.use(VueRouter);
@@ -18,13 +19,6 @@ Vue.component("modal-cart", modalCart);
 const store = new Vuex.Store({
   state: {
     showModal: false,
-    categories: [
-      {
-        name: "Category",
-        id: -1,
-        cells: []
-      }
-    ],
     cart: {
       counter: 0,
       totalPrice: 0,
@@ -40,9 +34,6 @@ const store = new Vuex.Store({
   mutations: {
     toggleModal() {
       this.state.showModal = !this.state.showModal;
-    },
-    updateCategories(state, categories) {
-      this.state.categories = categories;
     },
     updateCart(state, goods) {
       this.state.cart.goods = goods;
@@ -64,27 +55,6 @@ const store = new Vuex.Store({
     }
   },
   actions: {
-    fetchData(context) {
-      fetch("https://online-shop-backend.arahizzz.now.sh/categories").then(response => {
-        response.json().then(json => {
-          var categories = [];
-          json.forEach(element => {
-            fetch("https://online-shop-backend.arahizzz.now.sh/categories/" + element.id).then(
-              categoryRespone =>
-                categoryRespone.json().then(productList => {
-                  var category = {
-                    name: element.name,
-                    id: element.id,
-                    cells: productList.products
-                  };
-                  categories.push(category);
-                })
-            );
-          });
-          store.commit("updateCategories", categories);
-        });
-      });
-    },
     clearCart() {
       var cart = {
         counter: 0,
@@ -95,8 +65,6 @@ const store = new Vuex.Store({
     }
   }
 });
-
-store.dispatch("fetchData");
 
 const routes = [
   { path: "/", component: productList },
@@ -110,20 +78,12 @@ const router = new VueRouter({
   routes
 });
 
-var app = new Vue({
+new Vue({
+  el: "#app",
   router,
-  store,
-  computed: {
-    counter() {
-      return store.state.cart.counter;
-    },
-    categories() {
-      return store.state.categories;
-    }
+  store, 
+  components: {
+    "app" :app
   },
-  methods: {
-    toggleModal() {
-      store.commit("toggleModal");
-    }
-  }
-}).$mount("#app");
+  template: "<app/>"
+});

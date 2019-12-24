@@ -1,6 +1,6 @@
 <template>
     <div class="cell">
-    <img :src="cell.img_url" alt="">
+    <img :src="cell.image_url" alt="">
     <div class="bottom">
         <p><router-link :to="'/product/'+cell.id" class=goodName href='useless.html'>{{cell.name}}</router-link></p>
         <div><s v-if="cell.old_price != null" class='old_price'>{{cell.old_price}}</s></div>
@@ -16,7 +16,7 @@ export default {
         addToCart (cell) {
             var good = {
                 name: cell.name,
-                img_url: cell.img_url,
+                image_url: cell.image_url,
                 id: cell.id,
                 price: cell.price,
                 quantity: 1

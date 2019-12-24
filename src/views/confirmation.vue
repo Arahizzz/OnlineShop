@@ -46,7 +46,7 @@ export default {
           products
         });
         console.log(body);
-        fetch("https://online-shop-backend.arahizzz.now.sh/order", {
+        fetch("https://mshop-api.herokuapp.com/api/orders", {
           method: "post",
           headers: {
             Accept: "application/json",

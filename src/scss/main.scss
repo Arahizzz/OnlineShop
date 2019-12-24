@@ -69,6 +69,12 @@ h1{
     cursor: pointer;
 }
 
+#goods {
+    margin-top: 150px;
+    margin-bottom: 250px;
+    min-height: 800px;
+}
+
 .good {
     display: flex;
     vertical-align: middle;
@@ -209,11 +215,6 @@ header {
     transition: 0.5s ease;
 }
 
-#app {
-    margin-top: 150px;
-    margin-bottom: 250px;
-    min-height: 800px;
-}
 
 .list {
     margin-left: 25px;

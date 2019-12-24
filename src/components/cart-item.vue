@@ -2,7 +2,7 @@
     <div class="good">
         <div>
             <p class="cartIndex">{{index + 1}}</p>
-            <img :src="item.img_url"> 
+            <img :src="item.image_url"> 
             <div>
             <p class="name">{{item.name}}</p>
             <p class="price">{{item.price}}</p>
