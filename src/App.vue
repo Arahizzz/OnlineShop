@@ -1,12 +1,12 @@
 <template>
     <div>
         <header>
-            <a href="index.html">
+            <router-link to="/">
                 <div id="logo">
                     <img src="https://img.icons8.com/cotton/64/000000/shopping.png">
                     <p>Усе для дому</p>
                 </div>
-            </a>
+            </router-link>
             <div id="categories-container">
                 <router-link v-for="category in categories" :key="category.id" :to="{name: 'category', params:{id: category.id}}">
                         <div class="categoryblock">{{category.name}}</div>
