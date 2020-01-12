@@ -1,11 +1,11 @@
 <template>
     <div class="cell">
-    <img :src="cell.image_url" alt="">
-    <div class="bottom">
-        <p><router-link :to="'/product/'+cell.id" class=goodName>{{cell.name}}</router-link></p>
-        <div><s v-if="cell.old_price != null" class='old_price'>{{cell.old_price}}</s></div>
-        <p><span class="price">{{cell.price}}</span><button v-on:click="addToCart(cell)">Купити</button></p>
-    </div>
+        <img :src="cell.image_url" alt="">
+        <div class="bottom">
+            <p><router-link :to="'/product/'+cell.id" class=goodName>{{cell.name}}</router-link></p>
+            <div><s v-if="cell.old_price != null" class='old_price'>{{cell.old_price}}</s></div>
+            <p><span class="price">{{cell.price}}</span><button v-on:click="addToCart(cell)">Купити</button></p>
+        </div>
     </div>
 </template>
 
