@@ -112,5 +112,13 @@ h1 {
       font-size: 14px;
     }
   }
+
+  .name-and-price {
+    white-space: normal;
+  }
+
+  .name-wrapper {
+        width: 60vw;
+    }
 }
 </style>

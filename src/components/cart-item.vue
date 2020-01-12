@@ -3,10 +3,12 @@
         <div>
             <p class="cartIndex">{{index + 1}}</p>
             <img :src="item.image_url"> 
-            <div>
-            <p class="name">{{item.name}}</p>
-            <p class="price">{{item.price}}</p>
+            <span class="name-and-price">
+            <div class="name-wrapper">
+                <p class="name">{{item.name}}</p>
             </div>
+            <p class="price">{{item.price}}</p>
+            </span>
             </div>
             <div class="controls">
             <p v-on:click="decrement(index)" class="minus">-</p>
@@ -41,3 +43,14 @@ export default {
     },
 }
 </script>
+
+<style lang="scss" scoped>
+    .name-wrapper {
+        width: 50vw;
+    }
+
+    .name-and-price {
+        width: 95%;
+        white-space: nowrap;
+    }
+</style>
